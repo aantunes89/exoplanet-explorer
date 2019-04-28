@@ -64,9 +64,10 @@ Instructions:
      */
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
-      response.results.forEach(function(url) {
-        getJSON(url).then(createPlanetThumb);
-      });
+      let series = Promise.resolve();
+      response.results.forEach(function(url) {        
+        series = series.then(() => getJSON(url)).then(createPlanetThumb)        
+      })
     });
   });
 })(document);
